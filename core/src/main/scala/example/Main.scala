@@ -61,7 +61,10 @@ def formatBranch(br: String): String = br match
       case _           => LocalRemoteStatus.Diverged
     }
 
-  val shellFormat =
-    s"($basename:${formatBranch(branch)} $statusEnum $localRemoteStatus)"
+  val sb = StringBuilder(s"($basename:${formatBranch(branch)}")
+  if statusEnum != RepositoryStatus.Clean then sb.append(s" ${statusEnum}")
+  if localRemoteStatus != LocalRemoteStatus.Synced then
+    sb.append(s" ${localRemoteStatus}")
+  sb.append(")")
 
-  print(shellFormat)
+  print(sb.result())
