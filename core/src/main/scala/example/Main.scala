@@ -12,8 +12,8 @@ enum RepositoryStatus:
 enum LocalRemoteStatus:
   override def toString(): String = this match {
     case Synced   => s"${GREEN}synced${RESET}"
-    case Ahead    => s"${YELLOW}remote-is-ahead${RESET}"
-    case Behind   => s"${YELLOW}remote-is-behind${RESET}"
+    case Ahead    => s"${YELLOW}need-pull${RESET}"
+    case Behind   => s"${YELLOW}need-push${RESET}"
     case Diverged => s"${RED}remote-is-diverged${RESET}"
   }
   case Synced, Ahead, Behind, Diverged
