@@ -24,6 +24,7 @@ def formatBranch(br: String): String = br match
   case _        => br
 
 @main def main(args: String*): Unit =
+  if !checkCwdIsGit() then return // do nothing
   val repo = os.call(Seq("git", "rev-parse", "--show-toplevel")).out.text().trim
   val basename = os.Path(repo).last
   val status =
@@ -68,3 +69,8 @@ def formatBranch(br: String): String = br match
   sb.append(")")
 
   print(sb.result())
+
+def checkCwdIsGit(): Boolean =
+  os.proc("git", "rev-parse", "--is-inside-work-tree")
+    .call(check = false, stderr = os.Pipe)
+    .exitCode == 0
